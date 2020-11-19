@@ -196,7 +196,21 @@ export class Editor extends React.Component {
     this.props.persistLocalBackup(entry, collection);
   }, 2000);
 
+  /**
+   * Called whenever a field changes in the editor (afaict for ANY collection)
+   *
+   * @param {Immutable.Map<{
+   *   label: string,
+   *   name: string,
+   *   widget: string,
+   *   tagname?: string,
+   * }>} field
+   * @param {string} value The raw value of the field (?)
+   * @param {any} metadata [Not sure, could be undefined]
+   * @param {any} i18n [Not sure, could be undefined]
+   */
   handleChangeDraftField = (field, value, metadata, i18n) => {
+    console.log('[INFO] Editor#handleChangeDraftField', field.toJS(), value, metadata, i18n);
     const entries = [this.props.unPublishedEntry, this.props.publishedEntry].filter(Boolean);
     this.props.changeDraftField({ field, value, metadata, entries, i18n });
   };

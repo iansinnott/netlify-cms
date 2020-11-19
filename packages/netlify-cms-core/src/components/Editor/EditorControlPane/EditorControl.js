@@ -152,6 +152,22 @@ class EditorControl extends React.Component {
     activeLabel: false,
   };
 
+  // shouldComponentUpdate(nextProps) {
+  //   const changed = {};
+
+  //   for (const [k, v] of Object.entries(nextProps)) {
+  //     if (this.props[k] !== v) {
+  //       changed[k] = typeof v;
+  //     }
+  //   }
+
+  //   if (Object.keys(changed).length > 0) {
+  //     console.info('[INFO EDITOR_changedProps]', changed);
+  //   }
+
+  //   return true;
+  // }
+
   uniqueFieldId = uniqueId(`${this.props.field.get('name')}-field-`);
 
   isAncestorOfFieldError = () => {
@@ -163,6 +179,11 @@ class EditorControl extends React.Component {
       );
     }
     return false;
+  };
+
+  handleChange = (newValue, newMetadata) => {
+    console.log('[INFO] EditorControl#onChange', newValue, newMetadata);
+    return this.props.onChange(this.props.field, newValue, newMetadata);
   };
 
   render() {
@@ -288,7 +309,7 @@ class EditorControl extends React.Component {
               value={value}
               mediaPaths={mediaPaths}
               metadata={metadata}
-              onChange={(newValue, newMetadata) => onChange(field, newValue, newMetadata)}
+              onChange={this.handleChange}
               onValidate={onValidate && partial(onValidate, this.uniqueFieldId)}
               onOpenMediaLibrary={openMediaLibrary}
               onClearMediaControl={clearMediaControl}

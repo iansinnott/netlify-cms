@@ -95,6 +95,20 @@ const getFieldValue = ({ field, entry, isTranslatable, locale }) => {
 export default class ControlPane extends React.Component {
   state = {
     selectedLocale: this.props.locale,
+    // ...this.props.fields.reduce((agg, field) => {
+    //   const { locale, entry, collection } = this.props;
+    //   const { locales, defaultLocale } = getI18nInfo(collection);
+    //   const isTranslatable = isFieldTranslatable(field, locale, defaultLocale);
+    //   return {
+    //     ...agg,
+    //     [field.get('name')]: getFieldValue({
+    //       field,
+    //       entry,
+    //       locale,
+    //       isTranslatable,
+    //     }),
+    //   };
+    // }, {}),
   };
 
   componentValidate = {};
@@ -126,6 +140,17 @@ export default class ControlPane extends React.Component {
       return Promise.resolve();
     }
   };
+
+  // handleChange = (field, newValue, newMetadata) => {
+  //   const { locale, entry, collection } = this.props;
+  //   const { locales, defaultLocale } = getI18nInfo(collection);
+  //   const isTranslatable = isFieldTranslatable(field, locale, defaultLocale);
+  //   const v = getFieldValue({ field, entry, locale, isTranslatable });
+  //   const v3 = getFieldValue({ field: newValue, entry, locale, isTranslatable });
+  //   console.log('[INFO] EditorControlPane#onChange', newValue, v, v3);
+  //   // onChange(field, newValue, newMetadata, i18n);
+  //   this.setState({ [field.get('name')]: v });
+  // };
 
   render() {
     const { collection, entry, fieldsMetaData, fieldsErrors, onChange, onValidate, t } = this.props;
@@ -180,6 +205,8 @@ export default class ControlPane extends React.Component {
                 onChange={(field, newValue, newMetadata) =>
                   onChange(field, newValue, newMetadata, i18n)
                 }
+                // value={this.state[field.get('name')]}
+                // onChange={(...args) => this.handleChange(field, ...args)}
                 onValidate={onValidate}
                 processControlRef={this.controlRef.bind(this)}
                 controlRef={this.controlRef}
